@@ -58,13 +58,14 @@ const sampleDataForPhotoList = [
 
 const PhotoList = () => {
   return (
-    <ul className="photo-list">
-      {sampleDataForPhotoList.map((photo, index) => (
-        <li key={photo.id}>
-          <PhotoListItem {...photo} />
-        </li>
-      ))}
-    </ul>
+     <PhotoListItem
+        photoItem={photoObj}
+        key={id}
+        like={props.like}
+        likePhoto={props.likePhoto}
+        isClicked={() => props.isClicked(photoObj, similarPhotos)}
+        modal={props.modal}
+      />
   );
 };
 

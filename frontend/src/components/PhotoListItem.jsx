@@ -5,22 +5,26 @@ import PhotoFavButton from "./PhotoFavButton";
 const PhotoListItem = (props) => {
   const { username, imageSource, id, location, profile } = props;
 
+
   return (
-    <div className="photo-list__item" key={id}>
-      <div className="photo-list__fav-icon-svg">
-        <PhotoFavButton />
-      </div>
-      <img className="photo-list__image" src={imageSource} />
+    <li className="">
+      <PhotoFavButton
+        isLiked={props.like[id] || false}
+        likePhoto={props.likePhoto}
+        photoId={id}
+      />
+
+
       <div className="photo-list__user-details">
-        <img className="photo-list__user-profile" src={profile} />
+        <img src={user.profile} className="photo-list__user-profile"></img>
         <div className="photo-list__user-info">
-          <span>{username}</span>
-          <div className="photo-list__user-location">
+          <span>{user.name}</span>
+          <span className="photo-list__user-location">
             {location.city}, {location.country}
-          </div>
+          </span>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 
