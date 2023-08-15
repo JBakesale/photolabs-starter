@@ -3,7 +3,7 @@ import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
 const PhotoList = (props) => {
-  const photoList = props.photos.map((photo) => {
+  const photoArray = props.photos.map((photo) => {
     const { id, location, urls, user, similarPhotos } = photo;
     const photoObj = {
       location,
@@ -29,7 +29,7 @@ const PhotoList = (props) => {
 
   return (
     <ul className={!props.modal ? "photo-list" : "similar-photos"}>
-      {photoList}
+      {photoArray}
     </ul>
   );
 };
