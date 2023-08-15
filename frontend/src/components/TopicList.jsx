@@ -1,14 +1,32 @@
 import React from "react";
 import TopicListItem from "./TopicListItem";
-import topics from "mocks/topics";
+import FavBadge from "./FavBadge";
+
 import "../styles/TopicList.scss";
 
-const TopicList = () => {
-  const topicList = topics.map((topic) => {
-    return <TopicListItem topicTitle={topic.title} key={topic.id} />;
-  });
+const TopicList = (props) => {
+  const { topicObjs, isFavPhotoExist, getPhotosByTopic } = props;
 
-  return <div className="top-nav-bar__topic-list">{topicList}</div>;
+  const topicListItemArr = [
+    topicObjs.map((topic) => {
+      return (
+        <TopicListItem
+          key={topic.id}
+          topicObjs={topic}
+          getPhotosByTopic={getPhotosByTopic}
+        />
+      );
+    }),
+  ];
+
+  return (
+    <div className="top-nav-bar__topic-list">
+      {topicListItemArr}
+      <div className="topic-list__item">
+        <FavBadge isFavPhotoExist={isFavPhotoExist} />
+      </div>
+    </div>
+  );
 };
 
 export default TopicList;

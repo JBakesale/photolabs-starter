@@ -1,21 +1,35 @@
-import React from 'react';
+import React from "react";
+import TopNavigationBar from "../components/TopNavigationBar";
 import PhotoList from "../components/PhotoList";
-import TopNavigation from "../components/TopNavigationBar";
-import photos from 'mocks/photos';
-import '../styles/HomeRoute.scss';
 
-const HomeRoute = (props) => {
+import "../styles/HomeRoute.scss";
+
+function HomeRoute({
+  topicObjs,
+  photoObjs,
+  openModal,
+  isFavPhotoExist,
+  toggleFavSelect,
+  favStatus,
+  getPhotosByTopic,
+  reloadPhotos,
+}) {
   return (
     <div className="home-route">
-      <TopNavigation like={props.like} />
+      <TopNavigationBar
+        topicObjs={topicObjs}
+        isFavPhotoExist={isFavPhotoExist}
+        getPhotosByTopic={getPhotosByTopic}
+        reloadPhotos={reloadPhotos}
+      />
       <PhotoList
-        like={props.like}
-        likePhoto={props.likePhoto}
-        isClicked={props.isClicked}
-        photos={photos}
+        photoObjs={photoObjs}
+        favStatus={favStatus}
+        toggleFavSelect={toggleFavSelect}
+        openModal={openModal}
       />
     </div>
   );
-};
+}
 
 export default HomeRoute;

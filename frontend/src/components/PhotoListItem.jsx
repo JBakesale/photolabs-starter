@@ -1,45 +1,41 @@
-import React from "react";
-import PhotoFavButton from "./PhotoFavButton";
-import "../styles/PhotoListItem.scss";
+import React, { useState } from "react";
+import FavIcon from "./FavIcon";
 
-const PhotoListItem = ({
-  photoItem: { location, urls, user, id },
-  modal,
-  mainPhoto,
-  like,
-  likePhoto,
-  isClicked,
-}) => {
-  const modalClass = modal ? "photo-details-modal__" : "photo-list__";
-  const className =
-    modal && mainPhoto ? `${modalClass}image` : `${modalClass}item`;
-  const imageClassName =
-    modal && mainPhoto ? `${modalClass}image` : `${modalClass}image`;
+import "../styles/PhotoListItem.scss";
+import "../styles/PhotoFavButton.scss";
+
+const PhotoListItem = (props) => {
+  const { photoObjs, selectedValue, toggleFavSelect, openModal } = props;
+
+  const displayAlertValue = 0;
 
   return (
-    <li className={className}>
-      <PhotoFavButton
-        isLiked={like[id] || false}
-        likePhoto={likePhoto}
-        photoId={id}
-      />
+    <div key={photoObjs.id} id={photoObjs.id} className="photo-list__item">
+      <div className="photo-list__fav-icon">
+        <FavIcon
+          displayAlert={displayAlertValue}
+          selected={selectedValue}
+          toggleFavSelect={toggleFavSelect}
+        />
+      </div>
       <img
-        src={urls.regular}
-        className={imageClassName}
-        onClick={isClicked}
-        id={mainPhoto && "main-photo"}
+        onClick={openModal}
+        className="photo-list__image"
+        src={photoObjs.urls.regular}
       />
-
-      <div className={`${modalClass}user-details`}>
-        <img src={user.profile} className={`${modalClass}user-profile`} />
-        <div className={`${modalClass}user-info`}>
-          <span>{user.name}</span>
-          <span className={`${modalClass}user-location`}>
-            {location.city}, {location.country}
-          </span>
+      <div className="photo-list__user-details">
+        <img
+          className="photo-list__user-profile"
+          src={photoObjs.user.profile}
+        />
+        <div className="photo-list__user-info">
+          <p className="photo-list__user-username">{photoObjs.user.name}</p>
+          <p className="photo-list__user-location">
+            {photoObjs.location.city}, {photoObjs.location.country}
+          </p>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 
