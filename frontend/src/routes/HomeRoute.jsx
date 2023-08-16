@@ -1,35 +1,21 @@
 import React from "react";
-import TopNavigationBar from "../components/TopNavigationBar";
-import PhotoList from "../components/PhotoList";
+import TopNavigation from "components/TopNavigationBar";
+import PhotoList from "components/PhotoList";
+import SomeContext from "components/SomeContext";
 
 import "../styles/HomeRoute.scss";
 
-function HomeRoute({
-  topicObjs,
-  photoObjs,
-  openModal,
-  isFavPhotoExist,
-  toggleFavSelect,
-  favStatus,
-  getPhotosByTopic,
-  reloadPhotos,
-}) {
+const HomeRoute = ({ topics, photos, openModal, topicClick }) => {
   return (
-    <div className="home-route">
-      <TopNavigationBar
-        topicObjs={topicObjs}
-        isFavPhotoExist={isFavPhotoExist}
-        getPhotosByTopic={getPhotosByTopic}
-        reloadPhotos={reloadPhotos}
-      />
-      <PhotoList
-        photoObjs={photoObjs}
-        favStatus={favStatus}
-        toggleFavSelect={toggleFavSelect}
-        openModal={openModal}
-      />
-    </div>
+    <SomeContext.Consumer>
+      {(context) => (
+        <div className="home-route">
+          <TopNavigation topics={topics} topicClick={topicClick} />
+          <PhotoList photos={photos} openModal={openModal} />
+        </div>
+      )}
+    </SomeContext.Consumer>
   );
-}
+};
 
 export default HomeRoute;

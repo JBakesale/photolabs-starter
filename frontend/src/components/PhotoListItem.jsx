@@ -1,38 +1,42 @@
-import React, { useState } from "react";
-import FavIcon from "./FavIcon";
+import React from "react";
 
+import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
-import "../styles/PhotoFavButton.scss";
 
 const PhotoListItem = (props) => {
-  const { photoObjs, selectedValue, toggleFavSelect, openModal } = props;
-
-  const displayAlertValue = 0;
+  const {
+    city,
+    country,
+    imageSource,
+    profile,
+    name,
+    isFavorited,
+    onToggleFavorite,
+    onClick,
+  } = props;
 
   return (
-    <div key={photoObjs.id} id={photoObjs.id} className="photo-list__item">
-      <div className="photo-list__fav-icon">
-        <FavIcon
-          displayAlert={displayAlertValue}
-          selected={selectedValue}
-          toggleFavSelect={toggleFavSelect}
-        />
-      </div>
+    <div className="photo-list__item">
+      <PhotoFavButton isFavorited={isFavorited} onClick={onToggleFavorite} />
       <img
-        onClick={openModal}
         className="photo-list__image"
-        src={photoObjs.urls.regular}
+        src={imageSource}
+        alt="image"
+        onClick={onClick}
       />
+
       <div className="photo-list__user-details">
         <img
           className="photo-list__user-profile"
-          src={photoObjs.user.profile}
+          src={profile}
+          alt="user-profile"
         />
-        <div className="photo-list__user-info">
-          <p className="photo-list__user-username">{photoObjs.user.name}</p>
-          <p className="photo-list__user-location">
-            {photoObjs.location.city}, {photoObjs.location.country}
-          </p>
+
+        <div className="photo-list__user-info__location">
+          <h6 className="photo-list__user-info">{name}</h6>
+          <h6 className="photo-list__user-location">
+            {city}, {country}
+          </h6>
         </div>
       </div>
     </div>

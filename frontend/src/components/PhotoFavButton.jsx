@@ -1,11 +1,13 @@
-import React from "react";
-
+import React, { useState } from "react"; // remove
+import FavIcon from "./FavIcon";
 import "../styles/PhotoFavButton.scss";
 
-function PhotoFavButton() {
+function PhotoFavButton({ isFavorited, onClick }) {
   return (
-    <div className="photo-list__fav-icon">
-      <div className="photo-list__fav-icon-svg"></div>
+    <div className="photo-list__fav-icon" onClick={onClick}>
+      <div className="photo-list__fav-icon-svg">
+        <FavIcon selected={isFavorited} />
+      </div>
     </div>
   );
 }

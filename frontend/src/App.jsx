@@ -1,55 +1,39 @@
 import React from "react";
-import HomeRoute from "./routes/HomeRoute";
-import PhotoDetailsModal from "./routes/PhotoDetailsModal";
-
+import SomeContext from "components/SomeContext";
 import "./App.scss";
-
-import useApplicationData, { ACTIONS } from "./hooks/useApplicationData";
+import HomeRoute from "routes/HomeRoute";
+import PhotoDetailsModal from "routes/PhotoDetailsModal";
+import useApplicationData from "hooks/useApplicationData";
 
 const App = () => {
   const {
-    state,
+    modalOpen,
     openModal,
     closeModal,
-    toggleFavSelect,
-    getPhotosByTopic,
-    reloadPhotos,
-    filterSimilarPhotos,
+    selectedPhoto,
+    favorites,
+    updateFavPhotoIds,
+    photoData,
+    topicData,
+    fetchPhotosByTopic,
   } = useApplicationData();
 
-  const {
-    photos,
-    topics,
-    selectedPhoto,
-    modalVisible,
-    isFavPhotoExist,
-    favStatus,
-  } = state;
-
   return (
-    <div className="App">
-      <HomeRoute
-        photoObjs={photos}
-        favStatus={favStatus}
-        topicObjs={topics}
-        isFavPhotoExist={isFavPhotoExist}
-        toggleFavSelect={toggleFavSelect}
-        openModal={openModal}
-        getPhotosByTopic={getPhotosByTopic}
-        reloadPhotos={reloadPhotos}
-      />
-      {modalVisible && (
-        <PhotoDetailsModal
-          selectedPhoto={selectedPhoto}
-          favStatus={favStatus}
-          selectedValue={favStatus[selectedPhoto.id]}
-          photoObjs={filterSimilarPhotos(selectedPhoto)}
-          toggleFavSelect={() => toggleFavSelect(selectedPhoto.id)}
+    <SomeContext.Provider value={{ favorites, updateFavPhotoIds }}>
+      <div className="App">
+        <HomeRoute
+          topics={topicData}
+          photos={photoData}
           openModal={openModal}
-          closeModal={closeModal}
+          topicClick={fetchPhotosByTopic}
         />
-      )}
-    </div>
+        <PhotoDetailsModal
+          isOpen={modalOpen}
+          onClose={closeModal}
+          selectedPhoto={selectedPhoto}
+        />
+      </div>
+    </SomeContext.Provider>
   );
 };
 

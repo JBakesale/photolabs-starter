@@ -1,26 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import PhotoListItem from "./PhotoListItem";
-
+import SomeContext from "./SomeContext";
 import "../styles/PhotoList.scss";
 
-const PhotoList = (props) => {
-  const { photoObjs, favStatus, toggleFavSelect, openModal } = props;
+const PhotoList = ({ photos, openModal }) => {
+  const { favorites, updateFavPhotoIds } = useContext(SomeContext); 
 
-  const photoListItemArr = [
-    photoObjs.map((photo) => {
-      return (
-        <PhotoListItem
-          key={photo.id}
-          photoObjs={photo}
-          selectedValue={favStatus[photo.id]}
-          toggleFavSelect={() => toggleFavSelect(photo.id)}
-          openModal={() => openModal(photo)}
-        />
-      );
-    }),
-  ];
+  const photoListItem = photos.map((photo) => {
+    const isFavorited = favorites.includes(photo.id);
 
-  return <ul className="photo-list">{photoListItemArr}</ul>;
+    return (
+      <PhotoListItem
+        onClick={() => openModal(photo)}
+        key={photo.id}
+        city={photo.location.city}
+        country={photo.location.country}
+        imageSource={photo.urls.regular}
+        profile={photo.user.profile}
+        name={photo.user.name}
+        isFavorited={isFavorited}
+        onToggleFavorite={() => updateFavPhotoIds(photo.id)}
+      />
+    );
+  });
+
+  return <ul className="photo-list">{photoListItem}</ul>;
 };
 
 export default PhotoList;
